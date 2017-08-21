@@ -1,0 +1,34 @@
+<div layout="row" ng-if="!$ctrl.started">
+  <md-button class="md-primary md-raised" flex="100" ng-click="$ctrl.start(); $ctrl.initQuestion();" ng-disabled="$ctrl.teams.length < 2">
+    Première question
+  </md-button>
+</div>
+<div ng-if="$ctrl.started" ng-keypress="$ctrl.handleKeyPress($event)">
+  <div ng-if="$ctrl.ended" style="text-align: center;">
+    <h2 ng-if="$ctrl.winners.length < 2">Vainqueur</h2>
+    <h2 ng-if="$ctrl.winners.length > 1">Vainqueurs ex æquo</h2>
+    <div ng-repeat="winner in $ctrl.winners">
+      <md-icon md-svg-icon="{{ winner.avatar }}" class="avatar"></md-icon>
+      <span md-colors="{color: 'accent'}">{{ winner.name }}</span>
+    </div>
+  </div>
+  <div ng-if="!$ctrl.ended">
+    <md-slider-container ng-disabled="true">
+      <h5 style="padding-right: 28px;">Question</h5>
+      <md-slider ng-model="$ctrl.cursor" min="1" max="{{ $ctrl.getQuestionsCount() }}" md-discrete ng-readonly="true"></md-slider>
+      <div style="padding-left: 10px;">{{ $ctrl.getQuestionsCount() }}</div>
+    </md-slider-container>
+    <h1 ng-if="$ctrl.isLastQuestion()">Dernière question !</h1>
+    <h2 class="question"></h2>
+    <div ng-if="$ctrl.answer" class="answer"></div>
+    <div ng-if="!$ctrl.answer">
+      <p>Pour <strong md-colors="{color: 'accent'}" class="md-display-1">{{ $ctrl.getPoints() }}</strong> points</p>
+
+      <md-icon md-svg-icon="{{ $ctrl.team.avatar }}" class="avatar"></md-icon>
+      À
+      <span md-colors="{color: 'accent'}">{{ $ctrl.team.name }}</span>
+      de répondre
+    </div>
+  </div>
+</div>
+<audio></audio>

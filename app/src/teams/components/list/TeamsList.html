@@ -1,0 +1,44 @@
+<md-list>
+  <md-list-item ng-repeat="team in $ctrl.teams | orderBy : 'score' : true">
+    <div flex="nogrow">
+      <md-icon md-svg-icon="{{ team.avatar }}" class="avatar"></md-icon>
+    </div>
+    <div flex="grow">
+      <span md-colors="{color: 'accent'}">{{ team.name }}</span><br>
+      <strong class="md-display-1"
+              md-colors="{color: 'primary'}"
+              ng-mousedown="$ctrl.manualSetScore($event, team)"
+              oncontextmenu="return false;"
+      >{{ team.score }}</strong>
+    </div>
+    <div ng-if="!$ctrl.locked" flex="nogrow">
+      <md-button class="md-icon-button" ng-click="$ctrl.removeTeam(team)">
+        x
+      </md-button>
+    </div>
+  </md-list-item>
+</md-list>
+<form ng-submit="$ctrl.addTeam()" ng-if="!$ctrl.locked">
+  <div layout="row" layout-align="start start">
+    <span flex="5"></span>
+    <md-input-container flex="30">
+      <label>Avatar</label>
+      <md-select ng-model="$ctrl.newTeam.avatar" ng-change="$ctrl.goToName()">
+        <md-option ng-value="avatar" ng-repeat="avatar in $ctrl.avatars">
+          <md-icon md-svg-icon="{{ avatar }}" class="avatar"></md-icon>
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <span flex="5"></span>
+    <md-input-container flex="55">
+      <label>Nom d'équipe</label>
+      <input ng-model="$ctrl.newTeam.name" autocomplete="off" class="team-name" ng-focus="$ctrl.focusTeam()" ng-blur="$ctrl.blurTeam()">
+    </md-input-container>
+    <span flex="5"></span>
+  </div>
+  <div layout="row">
+    <md-button flex="100" type="submit" class="md-primary md-raised" ng-disabled="$ctrl.isNewTeamInvalid()">
+      Ajouter
+    </md-button>
+  </div>
+</form>

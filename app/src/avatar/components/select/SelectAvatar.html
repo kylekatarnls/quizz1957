@@ -1,0 +1,5 @@
+<md-button ng-repeat="avatar in $ctrl.avatars"
+           style="padding: 40px;"
+           ng-click="$ctrl.select({avatar})">
+  <md-icon md-svg-icon="{{ avatar }}" class="avatar"></md-icon>
+</md-button>
